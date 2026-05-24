@@ -368,6 +368,37 @@ body {
 }
 
 /* ----------------------------------------------------------------
+   INSIGHT BOX — gold callout below each chart
+   ---------------------------------------------------------------- */
+.insight-box {
+  margin: var(--gap-sm) var(--gap-lg) var(--gap-md);
+  padding: 14px 20px;
+  background: linear-gradient(90deg, rgba(201,168,76,0.08) 0%, transparent 100%);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+.insight-icon {
+  color: var(--gold);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* Tooltip note text */
+.tt-note {
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.74rem;
+  color: var(--text-3);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ----------------------------------------------------------------
    PRINT / LinkedIn export
    ---------------------------------------------------------------- */
 @media print {
