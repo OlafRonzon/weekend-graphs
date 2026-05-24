@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>The Angel of History — Technological Progress and the Persistence of War, 1900–2024</title>
+  <meta name="description" content="Two data visualizations inspired by Walter Benjamin's Thesis IX: the storm of progress and the persistence of war. Correlates cumulative global patent registrations with conflict lethality and active conflict counts, 1900–2024.">
+  <meta name="author" content="OlafRonzon">
+
+  <!-- Open Graph (LinkedIn) -->
+  <meta property="og:type"        content="article">
+  <meta property="og:title"       content="The Angel of History — Progress, Technology & War, 1900–2024">
+  <meta property="og:description" content="Where we perceive progress, the angel sees one single catastrophe. A Benjamin-inspired data essay.">
+  <meta property="og:image"       content="angel_header.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- ============================================================
+         HEADER
+    ============================================================ -->
+    <header class="page-header" id="top">
+      <div class="header-inner">
+
+        <div class="title-block">
+          <span class="series-label">Weekend Graphs · A Data Essay</span>
+          <h1 class="main-title">The Angel of History</h1>
+          <p class="main-subtitle">Technological Progress and the Persistence of War, 1900–2024</p>
+        </div>
+
+        <blockquote class="benjamin-quote" aria-label="Walter Benjamin, Thesis IX, 1940">
+          <div class="quote-body">
+            <p>"A Klee painting named <em>Angelus Novus</em> shows an angel looking as though he is about to move away from something he is fixedly contemplating. His eyes are staring, his mouth is open, his wings are spread. This is how one pictures the angel of history. His face is turned toward the past. Where we perceive a chain of events, he sees one single catastrophe which keeps piling wreckage and hurls it in front of his feet. The angel would like to stay, awaken the dead, and make whole what has been smashed. But a storm is blowing from Paradise; it has got caught in his wings with such violence that the angel can no longer close them. The storm irresistibly propels him into the future to which his back is turned, while the pile of debris before him grows skyward. This storm is what we call progress."</p>
+            <footer>— Walter Benjamin, <cite>On the Concept of History</cite>, Thesis IX (1940). Trans. Harry Zohn. In <cite>Illuminations</cite>, ed. Hannah Arendt. New York: Schocken Books, 1969, p. 257–258.</footer>
+          </div>
+        </blockquote>
+
+      </div>
+    </header>
+
+    <!-- ============================================================
+         CHARTS
+    ============================================================ -->
+    <main class="charts-wrapper">
+
+      <!-- Chart I -->
+      <section class="chart-section" id="section-chart1" aria-labelledby="chart1-title">
+        <div class="chart-header">
+          <div class="chart-number" aria-hidden="true">I</div>
+          <div class="chart-titles">
+            <h2 class="chart-title" id="chart1-title">The Diminishing Catastrophe?</h2>
+            <p class="chart-desc">
+              Each circle represents a major armed conflict. The horizontal axis shows cumulative global patent registrations at the conflict's midpoint — a proxy for the accumulated stock of technological civilization. The vertical axis shows estimated total deaths. Circle area encodes conflict duration in years.
+              <strong>Read left to right: the progression of technology. Read top to bottom: conflicts become less individually lethal.</strong> The full story, however, requires the second chart.
+            </p>
+          </div>
+        </div>
+        <div id="chart1" class="chart-area" role="img" aria-label="Bubble scatter chart: cumulative patents vs. conflict deaths, 1900–2024"></div>
+        <p class="chart-source">
+          Sources: USPTO Patent Technology Monitoring Team (PTMT); WIPO IP Statistics Database.
+          Conflict deaths: Uppsala Conflict Data Program (UCDP/PRIO) Battle-Related Deaths Dataset v25.1;
+          Correlates of War (CoW); Sarkees &amp; Wayman (2010), <em>Resort to War: 1816–2007</em>.
+          Pre-1946 death estimates carry significant uncertainty; mid-range scholarly consensus figures are used.
+        </p>
+      </section>
+
+      <!-- Chart II -->
+      <section class="chart-section" id="section-chart2" aria-labelledby="chart2-title">
+        <div class="chart-header">
+          <div class="chart-number" aria-hidden="true">II</div>
+          <div class="chart-titles">
+            <h2 class="chart-title" id="chart2-title">The Wreckage Accumulates</h2>
+            <p class="chart-desc">
+              Each point represents a calendar year, positioned by the cumulative patent stock in that year.
+              As technological civilization accelerates, the number of simultaneously active armed conflicts
+              does not diminish. <strong>In 2024, with nearly 12 million patents in force, 61 armed conflicts
+              are active — a record high by UCDP tracking.</strong> The angel's pile of debris grows skyward.
+              Individual wars have become less lethal; the institution of war has not.
+            </p>
+          </div>
+        </div>
+        <div id="chart2" class="chart-area" role="img" aria-label="Line chart: cumulative patents vs. number of active conflicts per year, 1900–2024"></div>
+        <p class="chart-source">
+          Sources: UCDP/PRIO Armed Conflict Dataset v25.1 (1946–2024), state-based conflicts ≥25 battle-deaths/year.
+          Gleditsch et al. (2002), <em>Journal of Peace Research</em> 39(5): 615–637.
+          Pre-1946 estimates from Correlates of War (CoW) project; note methodological difference in thresholds.
+          Dashed line = pre-UCDP estimates; solid line = UCDP verified data.
+        </p>
+      </section>
+
+    </main>
+
+    <!-- ============================================================
+         FOOTER — Methodology & Citations
+    ============================================================ -->
+    <footer class="page-footer">
+      <div class="footer-inner">
+
+        <div class="methodology-block">
+          <h3>Methodology &amp; Data Sources</h3>
+          <div class="method-cols">
+            <div class="method-col">
+              <h4>Patent Data (X-Axis)</h4>
+              <p>Cumulative USPTO utility patents granted, 1836–2023. Anchor values from the USPTO Patent Technology Monitoring Team (PTMT) official table. Intervening years between decadal anchors are linearly interpolated. The USPTO corpus is used as a consistent, fully documented proxy for accumulated global technological output; global WIPO filings (~3× higher from 1980) follow the same structural trend. Cumulative stock begins at ~339,000 (patents granted through 1899).</p>
+            </div>
+            <div class="method-col">
+              <h4>Conflict Deaths (Chart I, Y-Axis)</h4>
+              <p>Best-estimate total deaths per conflict, combining battle deaths and directly associated civilian mortality. Post-1946 data: UCDP Battle-Related Deaths Dataset v25.1. Pre-1946: Correlates of War (CoW) Interstate and Intrastate War datasets; Sarkees &amp; Wayman (2010); USHMM; Britannica. Death tolls for 20th-century conflicts carry genuine scholarly uncertainty; mid-range consensus estimates are used. Chart I positions each conflict at its temporal midpoint.</p>
+            </div>
+            <div class="method-col">
+              <h4>Active Conflicts (Chart II, Y-Axis)</h4>
+              <p>State-based armed conflicts active in a given calendar year (≥25 battle-deaths threshold). 1946–2024: UCDP/PRIO Armed Conflict Dataset v25.1 — the most rigorous systematic conflict dataset available. Pre-1946: estimates from CoW project (which applies a higher 1,000 battle-death threshold), scaled for comparability; indicated with a dashed line. The 2024 figure of 61 conflicts represents a record high in the UCDP series.</p>
+            </div>
+          </div>
+          <p class="caveat-text">
+            <strong>Epistemic note:</strong> Historical death tolls are estimates, not counts; pre-WWII figures in particular rest on fragmentary evidence with ranges of ±50% or more in some cases. The use of cumulative patent registrations as a proxy for "technological civilization" is an interpretive device inspired by Benjamin's framework — an argument about historical structure, not a causal claim. Correlation between patent growth and conflict patterns does not imply that one causes the other. The visualizations are intended to provoke reflection on the relationship between technological progress and the persistence of political violence, in the spirit of Benjamin's critical philosophy of history.
+          </p>
+        </div>
+
+        <div class="footer-credit">
+          <p>Visualization by <strong>OlafRonzon</strong> · May 2024 · Weekend Graphs</p>
+          <p>Inspired by Walter Benjamin, <em>On the Concept of History</em> (1940)</p>
+          <p>Data: USPTO PTMT · WIPO IP Statistics · UCDP/PRIO ACD v25.1 · Correlates of War · Sarkees &amp; Wayman (2010)</p>
+        </div>
+
+      </div>
+    </footer>
+
+  </div><!-- /.page-wrapper -->
+
+  <!-- Tooltip (shared across charts) -->
+  <div id="tooltip" class="chart-tooltip" role="tooltip" aria-live="polite"></div>
+
+  <!-- D3.js v7 -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <!-- Data & Charts -->
+  <script src="data.js"></script>
+  <script src="chart.js"></script>
+
+</body>
+</html>
