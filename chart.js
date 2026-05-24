@@ -172,17 +172,21 @@
         .attr("stroke-dasharray", "5,5")
         .attr("opacity", 0.45);
 
-      // Label at top — horizontal, readable
-      const labelG = g.append("g").attr("transform", `translate(${x + 5}, 8)`);
+      // Label at top — vertical, readable top-to-bottom
+      const labelG = g.append("g").attr("transform", `translate(${x - 4}, 12)`);
       labelG.append("text")
+        .attr("writing-mode", "vertical-rl")
+        .attr("text-anchor", "start")
         .attr("fill", ann.color)
         .attr("font-size", "11px")
         .attr("font-family", "Inter, sans-serif")
-        .attr("font-weight", "500")
+        .attr("font-weight", "600")
         .attr("opacity", 0.85)
         .text(`${ann.year}`);
       labelG.append("text")
-        .attr("y", 14)
+        .attr("x", 12)
+        .attr("writing-mode", "vertical-rl")
+        .attr("text-anchor", "start")
         .attr("fill", ann.color)
         .attr("font-size", "9.5px")
         .attr("font-family", "Inter, sans-serif")
@@ -389,22 +393,7 @@
       .attr("opacity", 0.5)
       .attr("marker-end", "url(#arrowhead-trend)");
 
-    // Label parallel to and above the trend line
-    // Angle of line in degrees (SVG coords: Y increases downward)
-    const angleDeg = Math.atan2(ay2 - ay1, ax2 - ax1) * 180 / Math.PI;
-    const midX = (ax1 + ax2) / 2;
-    const midY = (ay1 + ay2) / 2;
-    g.append("text")
-      .attr("x", midX)
-      .attr("y", midY - 10)  // offset above the line
-      .attr("text-anchor", "middle")
-      .attr("fill", C.textMuted)
-      .attr("font-size", "11px").attr("font-family", "Inter, sans-serif")
-      .attr("font-style", "italic")
-      .attr("pointer-events", "none")
-      .attr("transform", `rotate(${angleDeg}, ${midX}, ${midY - 10})`)
-      .text("conflicts trend less lethal");
-
+    // Arrow text label removed per user request.
     // === LEGEND (right panel) ===
     const LX = MARGIN.left + W + 18;
     let ly = MARGIN.top + 10;
