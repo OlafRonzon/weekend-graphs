@@ -331,8 +331,9 @@
 
     // === LABELS — vertical, rotated -90°, above each bubble ===
     // Vertical labels breathe without crowding horizontal space.
+    // (WWI and WWII removed because they are already on the vertical annotation lines)
     const LABELED = new Set([
-      "World War I", "World War II", "Vietnam War",
+      "Vietnam War",
       "Rwandan Genocide", "Syrian Civil War",
       "Gaza War", "Russo-Ukrainian War",
     ]);
