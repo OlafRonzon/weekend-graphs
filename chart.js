@@ -325,76 +325,85 @@
         });
     });
 
-    // === LABELS — 7 iconic conflicts + Gaza + Ukraine ===
+    // === LABELS — vertical, rotated -90°, above each bubble ===
+    // Vertical labels breathe without crowding horizontal space.
     const LABELED = new Set([
       "World War I", "World War II", "Vietnam War",
       "Rwandan Genocide", "Syrian Civil War",
       "Gaza War", "Russo-Ukrainian War",
     ]);
 
-    // Per-conflict label offset overrides to prevent overlap
-    const OFFSETS = {
-      "World War I":       [  6, -10 ],
-      "World War II":      [  6,  12 ],
-      "Vietnam War":       [  6,  -9 ],
-      "Rwandan Genocide":  [  6,  -9 ],
-      "Syrian Civil War":  [  6,  10 ],
-      "Gaza War":          [  6, -10 ],
-      "Russo-Ukrainian War": [ 6, -10 ],
-    };
-
     data.filter(d => LABELED.has(d.name)).forEach(d => {
-      const cx  = xScale(d.cum);
-      const cy  = yScale(d.deaths);
-      const r   = rScale(d.dur);
+      const cx = xScale(d.cum);
+      const cy = yScale(d.deaths);
+      const r  = rScale(d.dur);
       if (isNaN(cx) || isNaN(cy)) return;
-      const [ox, oy] = OFFSETS[d.name] || [6, -10];
+
+      // Small tick connector from bubble edge upward
+      const tickTop = cy - r - 6;
+      g.append("line")
+        .attr("x1", cx).attr("x2", cx)
+        .attr("y1", cy - r).attr("y2", tickTop)
+        .attr("stroke", C.textMuted).attr("stroke-width", 0.8)
+        .attr("pointer-events", "none");
+
+      // Label anchored at top of tick, rotated -90deg (reads bottom-to-top)
       g.append("text")
-        .attr("x", cx + r + ox).attr("y", cy + oy)
+        .attr("x", cx)
+        .attr("y", tickTop - 2)
+        .attr("text-anchor", "start")
         .attr("fill", C.textSec)
-        .attr("font-size", "11px").attr("font-family", "Inter, sans-serif")
+        .attr("font-size", "10.5px").attr("font-family", "Inter, sans-serif")
         .attr("font-weight", "400")
         .attr("pointer-events", "none")
+        .attr("transform", `rotate(-90, ${cx}, ${tickTop - 2})`)
         .text(d.name);
     });
 
-    // === TREND ARROW — prominent downward-right annotation ===
-    // Draw a curved annotation showing the overall direction
-    const arrowX1 = W * 0.18, arrowY1 = H * 0.20;
-    const arrowX2 = W * 0.76, arrowY2 = H * 0.72;
+    // === TREND ARROW — straight diagonal, upper-left → lower-right ===
+    // In this chart: upper-left = high deaths + few patents (early wars)
+    //                lower-right = low deaths + many patents (recent wars)
+    // So the arrow correctly illustrates the downward lethality trend.
+    const ax1 = W * 0.10, ay1 = H * 0.18;  // near WWII cluster
+    const ax2 = W * 0.82, ay2 = H * 0.78;  // near recent small conflicts
 
-    // Curved path
-    g.append("path")
-      .attr("d", `M ${arrowX1} ${arrowY1} C ${arrowX1 + 80} ${arrowY1 + 60}, ${arrowX2 - 80} ${arrowY2 - 40}, ${arrowX2} ${arrowY2}`)
-      .attr("fill", "none")
-      .attr("stroke", C.textMuted)
-      .attr("stroke-width", 1.2)
-      .attr("stroke-dasharray", "4,4")
-      .attr("marker-end", "url(#arrowhead)")
-      .attr("opacity", 0.55);
-
-    // Arrowhead marker
-    svg.select("defs") && svg.append("defs")
+    // Define arrowhead marker properly in its own defs block
+    svg.append("defs")
       .append("marker")
-      .attr("id", "arrowhead")
+      .attr("id", "arrowhead-trend")
       .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 8).attr("refY", 0)
+      .attr("refX", 9).attr("refY", 0)
       .attr("markerWidth", 6).attr("markerHeight", 6)
       .attr("orient", "auto")
       .append("path")
-      .attr("d", "M0,-5L10,0L0,5")
-      .attr("fill", C.textMuted)
-      .attr("opacity", 0.55);
+      .attr("d", "M0,-4L10,0L0,4Z")
+      .attr("fill", C.textMuted);
 
-    // Trend label
+    // Straight dashed line with arrowhead at the lower-right end
+    g.append("line")
+      .attr("x1", ax1).attr("y1", ay1)
+      .attr("x2", ax2).attr("y2", ay2)
+      .attr("stroke", C.textMuted)
+      .attr("stroke-width", 1.4)
+      .attr("stroke-dasharray", "5,5")
+      .attr("opacity", 0.5)
+      .attr("marker-end", "url(#arrowhead-trend)");
+
+    // Label parallel to and above the trend line
+    // Angle of line in degrees (SVG coords: Y increases downward)
+    const angleDeg = Math.atan2(ay2 - ay1, ax2 - ax1) * 180 / Math.PI;
+    const midX = (ax1 + ax2) / 2;
+    const midY = (ay1 + ay2) / 2;
     g.append("text")
-      .attr("x", (arrowX1 + arrowX2) / 2 - 55)
-      .attr("y", (arrowY1 + arrowY2) / 2 - 18)
+      .attr("x", midX)
+      .attr("y", midY - 10)  // offset above the line
+      .attr("text-anchor", "middle")
       .attr("fill", C.textMuted)
-      .attr("font-size", "11.5px").attr("font-family", "Inter, sans-serif")
+      .attr("font-size", "11px").attr("font-family", "Inter, sans-serif")
       .attr("font-style", "italic")
-      .attr("transform", `rotate(-28, ${(arrowX1 + arrowX2) / 2 - 55}, ${(arrowY1 + arrowY2) / 2 - 18})`)
-      .text("conflicts trend less lethal →");
+      .attr("pointer-events", "none")
+      .attr("transform", `rotate(${angleDeg}, ${midX}, ${midY - 10})`)
+      .text("conflicts trend less lethal");
 
     // === LEGEND (right panel) ===
     const LX = MARGIN.left + W + 18;
