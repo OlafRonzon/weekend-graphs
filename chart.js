@@ -261,7 +261,7 @@
     // Scales
     const xScale = d3.scaleLog().domain([4e5, 8e7]).range([0, W]).clamp(true);
     const yScale = d3.scaleLog().domain([8000, 2.5e8]).range([H, 0]).clamp(true);
-    const rScale = d3.scaleSqrt().domain([1, 60]).range([6, 34]);
+    const rScale = d3.scaleSqrt().domain([8000, 85000000]).range([4, 42]);
 
     // Grid
     drawGrid(g, xScale, yScale, W, H,
@@ -300,7 +300,7 @@
     sorted.forEach(d => {
       const cx  = xScale(d.cum);
       const cy  = yScale(d.deaths);
-      const r   = rScale(d.dur);
+      const r   = rScale(d.deaths);
       const col = eraColor(d.mid);
       if (isNaN(cx) || isNaN(cy)) return;
 
@@ -438,19 +438,19 @@
     ly += 18;
     svg.append("text").attr("x", LX).attr("y", ly)
       .attr("fill", C.textMuted).attr("font-size", "9.5px")
-      .attr("font-family", "Inter, sans-serif").text("= conflict duration");
+      .attr("font-family", "Inter, sans-serif").text("= estimated deaths");
     ly += 12;
 
-    [1, 10, 30].forEach((yrs, i) => {
-      const r  = rScale(yrs);
-      const ry = ly + i * 34 + 10;
-      svg.append("circle").attr("cx", LX + 18).attr("cy", ry)
+    [1e4, 1e6, 5e7].forEach((deaths, i) => {
+      const r  = rScale(deaths);
+      const ry = ly + i * 38 + 14;
+      svg.append("circle").attr("cx", LX + 20).attr("cy", ry)
         .attr("r", r).attr("fill", "none")
         .attr("stroke", C.textMuted).attr("stroke-width", 1);
-      svg.append("text").attr("x", LX + 36).attr("y", ry + 4)
+      svg.append("text").attr("x", LX + 46).attr("y", ry + 4)
         .attr("fill", C.textMuted).attr("font-size", "9.5px")
         .attr("font-family", "Inter, sans-serif")
-        .text(`${yrs} yr${yrs > 1 ? "s" : ""}`);
+        .text(fmtDeaths(deaths));
     });
 
     // Insight box injected into the DOM after the chart
